@@ -4,37 +4,39 @@ library(dplyr)
 library(stringr)
 library(clusterProfiler)
 library(AnnotationDbi)
+library(ggplot2)
 
-# read database
-geneset <- "gene_association.goa_ref_human.gz"
-geneset <- read.delim(geneset, header=FALSE, comment.char = "!")
-Term2gene <- data.frame(geneset[5], geneset[3])
-genesetdesc <- "go-list.txt"
-genesetdesc <- read.delim(genesetdesc, header=FALSE)
-Term2name <- data.frame(genesetdesc[1], genesetdesc[2])
-Term_type <- genesetdesc[, c(1, 3)]
-colnames(Term_type) <- c("ID", "Term type")
+# term and gene
+geneset <- "data/goa_human.gaf.gz"
+geneset <- read.delim(geneset, header = FALSE, comment.char = "!")
+Term2gene <- dplyr::select(geneset, V5, V3) # 
+# term and name
+genesetdesc <- "data/go_namespace.txt"
+genesetdesc <- read.delim(genesetdesc, header = FALSE, sep = '\t')
+Term2name <- dplyr::select(genesetdesc, V1, V2) # 
+# term and type
+Term2type <- dplyr::select(genesetdesc, V1, V3) #
+colnames(Term2type) <- c("ID", "Term type")
 
-###################
 save_go <- function(ego, deg_number, filtered) {
   res <- as.data.frame(ego)
-  res <- merge(res, Term_type)
-  res <- dplyr::select(res, ID, geneID, Description, GeneRatio, BgRatio, `Term type`, pvalue, qvalue, Count)
+  res <- merge(res, Term2type, by = 'ID')
+  res <- dplyr::select(res, -p.adjust)
   res$DEG_list <- deg_number
   # go classification
   go_class <- dplyr::select(res, Description, `Term type`, Count, pvalue)
   go_class <- dplyr::arrange(go_class, pvalue)[1:30, ]
   go_class <- dplyr::arrange(go_class, `Term type`)
   go_class$Description <- factor(go_class$Description, levels = go_class$Description)
-  pdf(paste0(Out_name, "_", filtered, ".go.classification.xls"))
+  pdf(paste0(Out_name, "_", filtered, ".go.classification.pdf"))
   ggplot(go_class, aes(x=Description, y=Count, fill = `Term type`)) +
     geom_bar(stat = "identity") +
     labs(x="GO term", y="Number of genes", title="GO classification") +
-    coord_flip() +
+    # coord_flip() +
     theme_bw()
   dev.off()
   # xls
-  xls <- res[, -2]
+  xls <- dplyr::select(res, -geneID)
   write.table(xls,
               file = paste0(Out_name, "_", filtered, ".go.xls"),
               quote = FALSE,
@@ -73,7 +75,7 @@ draw_DAG <- function(gene_list, filteredd) {
   dev.off()
 }
 
-####################
+###
 argv <- commandArgs(TRUE)
 DEG <- argv[1]
 Out_name <- argv[2]
