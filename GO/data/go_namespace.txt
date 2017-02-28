@@ -48407,3 +48407,4 @@ GO:2001313	UDP-4-deoxy-4-formamido-beta-L-arabinopyranose metabolic process	biol
 GO:2001314	UDP-4-deoxy-4-formamido-beta-L-arabinopyranose catabolic process	biological_process
 GO:2001315	UDP-4-deoxy-4-formamido-beta-L-arabinopyranose biosynthetic process	biological_process
 GO:2001316	kojic acid metabolic process	biological_process
+GO:2001317	kojic acid biosynthetic process	biological_process
