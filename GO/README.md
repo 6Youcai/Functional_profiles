@@ -22,6 +22,6 @@ Ontology中的term有两种相互关系，它们分别是`is_a`关系和`part_of
 part_of稍微复杂，如nucleus part_of cell，核肯定是细胞的一部分，但有的细胞没有核。
 
 # GO 数据库
-GO数据库[http://www.geneontology.org/]，收集的是对各种物种基因功能进行限定和描述的标准词汇（term），
+[GO数据库](http://www.geneontology.org/)，收集的是对各种物种基因功能进行限定和描述的标准词汇（term），
 是国际标准化的基因功能描述分类系统。根据基因产物的相关生物学过程、细胞组分以及分子功能三个大类分别给予定义，
 而每一大类下又包含更多层级具体term，这些定义与具体物种无关。
