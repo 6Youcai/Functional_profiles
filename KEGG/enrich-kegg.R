@@ -63,7 +63,7 @@ disease <- enrichDO(gene          = gene_enterzid,
 disease <- as.data.frame(disease)
 disease$geneID <- str_replace_all(disease$geneID, "/", ";")
 save_table(out_dat   = disease,
-           file_name = paste0(out_name, ".filtered.disease.xls"))
+           file_name = paste0(out_name, ".unfilter.disease.xls"))
 
 pdf(paste0(out_name, ".kegg.pdf"), width = 12)
   dotplot(kk, showCategory = 20)
