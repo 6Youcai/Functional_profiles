@@ -54,17 +54,6 @@ res_filter <- dplyr::filter(res, pvalue <= 0.05, qvalue < 0.2)
 save_table(out_dat   = res_filter,
            file_name = paste0(out_name, ".filtered.kegg.xls"))
 
-disease <- enrichDO(gene          = gene_enterzid,
-                    ont           = "DO",
-                    pvalueCutoff  = 1,
-                    pAdjustMethod = "BH",
-                    qvalueCutoff  = 1,
-                    readable      = TRUE)
-disease <- as.data.frame(disease)
-disease$geneID <- str_replace_all(disease$geneID, "/", ";")
-save_table(out_dat   = disease,
-           file_name = paste0(out_name, ".unfilter.disease.xls"))
-
 pdf(paste0(out_name, ".kegg.pdf"), width = 12)
   dotplot(kk, showCategory = 20)
 dev.off()
