@@ -23,18 +23,23 @@ save_go <- function(ego, deg_number, filtered) {
   res <- merge(res, Term2type, by = 'ID')
   res <- dplyr::select(res, -p.adjust)
   res$DEG_list <- deg_number
+
   # go classification
   go_class <- dplyr::select(res, Description, `Term type`, Count, pvalue)
   go_class <- dplyr::arrange(go_class, pvalue)[1:30, ]
   go_class <- dplyr::arrange(go_class, `Term type`)
   go_class$Description <- factor(go_class$Description, levels = go_class$Description)
-  pdf(paste0(Out_name, "_", filtered, ".go.classification.pdf"))
+
+  pdf(paste0(Out_name, "_", filtered, ".go.classification.pdf"), height = 15, width = 17)
   ggplot(go_class, aes(x=Description, y=Count, fill = `Term type`)) +
     geom_bar(stat = "identity") +
-    labs(x="GO term", y="Number of genes", title="GO classification") +
-    # coord_flip() +
-    theme_bw()
+    theme_minimal() +
+    labs(x="", y="Number of genes", title="GO classification") +
+    theme(axis.text.x=element_text(angle=45, size = 10, hjust = 1)) +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    theme(legend.position = "bottom")
   dev.off()
+
   # xls
   xls <- dplyr::select(res, -geneID)
   write.table(xls,
