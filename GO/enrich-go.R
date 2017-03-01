@@ -105,14 +105,14 @@ y3 <- enrichGO(gene_enterzid,
                pAdjustMethod = "BH",
                qvalueCutoff = 0.2) 
 
-pdf(paste0(Out_name, "_", filteredd, ".go.MF.pdf"))
+pdf(paste0(Out_name, "_filteredd.go.MF.pdf"))
   plotGOgraph(y1)
 dev.off()
 
-pdf(paste0(Out_name, "_", filteredd, ".go.BP.pdf"))
+pdf(paste0(Out_name, "_filteredd.go.BP.pdf"))
   plotGOgraph(y2)
 dev.off()
 
-pdf(paste0(Out_name, "_", filteredd, ".go.CC.pdf"))
+pdf(paste0(Out_name, "_filteredd.go.CC.pdf"))
   plotGOgraph(y3)
 dev.off()
