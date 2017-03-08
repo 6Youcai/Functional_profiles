@@ -4,6 +4,7 @@ library(AnnotationDbi)
 library(clusterProfiler)
 library(pathview)
 library(stringr)
+library(dplyr)
 
 #
 to_symbol <- function(ENTREZIDs) {
@@ -75,5 +76,5 @@ for(i in 1:nrow(res_filter)) {
            species    = "hsa",
            # supply your own data
            # kegg.dir = "kegg/graph",
-           limit     = list(gene = max(log_fc), cpd = 1))
+           limit     = list(gene = max(fc_fixed), cpd = 1))
 }
