@@ -31,7 +31,7 @@ part_of稍微复杂，如nucleus part_of cell，核肯定是细胞的一部分�
 [不放回抽样](https://en.wikipedia.org/wiki/Hypergeometric_distribution)
 
 
-![](./GO/data/go-basic.obo)
+![](./data/hyper.png)
 
 <!--
 ```
